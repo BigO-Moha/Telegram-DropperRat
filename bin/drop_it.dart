@@ -11,7 +11,6 @@ void main(List<String> args) async {
   // print(argResults.rest[0]);
   // await Downloader().validateAndDownload(argResults.rest[0]);
   await Downloader().copier(programName: Settings.programNameCompiled);
-  await Downloader().addToTasks(programName: Settings.programNameCompiled);
  
 
   // await Downloader().checkAndGen();
