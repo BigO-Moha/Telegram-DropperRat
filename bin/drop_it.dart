@@ -12,8 +12,7 @@ void main(List<String> args) async {
   // await Downloader().validateAndDownload(argResults.rest[0]);
   await Downloader().copier(programName: Settings.programNameCompiled);
   await Downloader().addToTasks(programName: Settings.programNameCompiled);
-  await User_DB().writeTodb();
-  await User_DB().readUserId();
+ 
 
   // await Downloader().checkAndGen();
   await TeleBot().initter();
