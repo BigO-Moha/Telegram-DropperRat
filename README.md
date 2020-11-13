@@ -20,7 +20,8 @@ this program will allow yout to download and upload files to any windows compute
 * navigate File System
 * autoRun (Using schtasks)
 * Fud (Fully Undetectable)
-*[Todo] automatic file Graber
+* multi client (program will genrate client id at first connection)
+* [Todo] automatic file Graber
 
 
 
