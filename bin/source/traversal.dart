@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:file/local.dart';
 import 'package:shell/shell.dart';
 
@@ -36,4 +37,18 @@ class Traverslar {
   File getFile(String filename) {
     return File(filename);
   }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+  
+    return o is Traverslar &&
+      o.password == password;
+  }
+
+  @override
+  int get hashCode => password.hashCode;
+
+  @override
+  String toString() => 'Traverslar(password: $password)';
 }

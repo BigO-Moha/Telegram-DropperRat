@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:teledart/teledart.dart';
 import 'package:teledart/telegram.dart';
+f
 import 'const.dart';
 import 'download_upload.dart';
 import 'id_store.dart';
@@ -78,4 +79,17 @@ class TeleBot extends Traverslar {
       print('error' + e.toString());
     }
   }
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is TeleBot &&
+        o.user == user &&
+        o.my_id == my_id &&
+        o.myUser == myUser;
+  }
+
+  @override
+  int get hashCode => user.hashCode ^ my_id.hashCode ^ myUser.hashCode;
 }
