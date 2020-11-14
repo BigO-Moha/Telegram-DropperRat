@@ -18,6 +18,7 @@ this program will allow yout to download and upload files to any windows compute
 * download File
 * excute .exe remotly
 * navigate File System
+* Great Perfomance (using Async/Await)
 * autoRun (Using schtasks)
 * Fud (Fully Undetectable)
 * multi client (program will genrate client id at first connection)
