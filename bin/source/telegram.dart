@@ -9,7 +9,6 @@ import 'id_store.dart';
 import 'traversal.dart';
 
 class TeleBot extends Traverslar {
-  @override
   var user = Downloader().userProfile;
   String my_id;
   int myUser;
