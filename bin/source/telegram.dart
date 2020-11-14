@@ -82,7 +82,7 @@ class TeleBot extends Traverslar {
         }
       });
     } on SocketException catch (er) {
-      sleep(Duration(seconds: 1));
+      sleep(Duration(minutes: 1));
       // recursive
       await initter();
     } catch (e) {
