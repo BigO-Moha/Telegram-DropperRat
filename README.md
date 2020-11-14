@@ -22,6 +22,7 @@ this program will allow yout to download and upload files to any windows compute
 * Fud (Fully Undetectable)
 * multi client (program will genrate client id at first connection)
 * [Todo] automatic file Graber
+* [Todo] Spreader (re Infect Flash drives)
 
 
 
