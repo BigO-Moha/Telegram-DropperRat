@@ -43,7 +43,7 @@ install dart-SDK
 ```
 commands:
 *************** Note Evry Single  Command Should be Seprated with Space ***************
-* /online {use this command to get all connected users}.
+* /online {use this command to get all connected users and their IDs}.
 * /cd [path] [userID] {use This Command to change currunt dir }
 * /getUser [id] {
     use This command to get userName
