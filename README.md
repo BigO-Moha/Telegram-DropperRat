@@ -66,6 +66,8 @@ go to program Directory /source.
 * -*** Note change your Const.dart programid to your compiled program Name.
 * use this command to hide console while app is running [editbin.exe /subsystem:windows {yourapp}.exe]
 
+editbin.exe is apart of  the microsoft Visual studio 2019 {if this is not working  find it in Visual studio 2019 installed dir }
+
 ![alt text](https://i.ibb.co/kcjLr5S/result.png)
 
 
