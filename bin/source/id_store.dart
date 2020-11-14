@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
-import 'package:path/path.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
@@ -14,23 +12,25 @@ class User_DB {
   var userId = intMapStoreFactory.store('my_Id');
 
   Future<String> writeTodb() async {
-    var db = await dbFactory.openDatabase(db_path);
-    var key = await userId.add(db, {'UIDC': await random(1, 100000)});
-    var record = await userId.record(key).getSnapshot(db);
-    print(record.value.values.first.toString());
-    return record.value.values.first.toString();
+    try {
+      var db = await dbFactory.openDatabase(db_path);
+      var userGenID = await random(1, 100000);
+      var key = await userId.add(db, {'UIDC': userGenID.toString()});
+      var record = await userId.record(key).getSnapshot(db);
+      return record.value.values.first.toString();
+    } on Error catch (e) {
+      print(e);
+    }
   }
 
   // ignore: missing_return
   Future<String> readUserId() async {
     try {
       var db = await dbFactory.openDatabase(db_path);
-      var value = (await userId.find(db,
-          finder: Finder(filter: Filter.matches('UIDC', '^'))));
-      if (value != null) {
-        print(value.first.value.values.first.toString());
-        return value.first.value.values.first.toString();
-      }
+      var records = (await userId.find(db,
+          finder: Finder(filter: Filter.matches('UIDC', ''))));
+      print(records.first.value);
+      return records.first.value.values.first;
     } on Error catch (e) {
       return null;
     }
@@ -42,11 +42,14 @@ class User_DB {
   }
 
   Future<String> checkAndGet() async {
-    if (await readUserId() == null) {
+    var userId = await readUserId();
+    if (userId == null) {
       var key = await writeTodb();
       return key;
     } else {
-      return readUserId();
+      return await readUserId().then((value) {
+        return value;
+      });
     }
   }
 

@@ -38,7 +38,28 @@ use only in Windows platform.
 go to https://dart.dev/get-dart#install.
 install dart-SDK
 
+
 ## Usage <a name = "usage"></a>
+```
+commands:
+*************** Note Evry Single  Command Should be Seprated with Space ***************
+* /online {use this command to get all connected users}.
+* /cd [path] [userID] {use This Command to change currunt dir }
+* /getUser [id] {
+    use This command to get userName
+}
+
+* /getFile [filePath with Name] [userId] {
+    use This Command to Get A file from Computer
+}
+* /pwd [userId] {
+    get Current Working directory
+}
+* /run [programPath] [userID] {
+    Execute Program remotly 
+}
+
+```
 go to program Directory /source.
 * Change const.dart file line 6 with your Own telegram bot api.
 * Compile using  [ dart2native bin/drop_it.dart -o bin/myApp.exe].

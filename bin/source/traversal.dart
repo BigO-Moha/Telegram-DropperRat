@@ -19,31 +19,39 @@ class Traverslar {
 
   getUserInfo() {}
 
-  String getListFiles() {
+  Future<String> getListFiles() async {
     try {
-      var dir = getCurrentDir();
-      var files = fs.directory(dir);
-      var listFile = files.listSync(recursive: false, followLinks: false);
+      var dir = await getCurrentDir();
+      var files = await fs.directory(dir);
+      var listFile = await files.listSync(recursive: false, followLinks: false);
       return listFile.toString();
     } catch (e) {
       print(e);
     }
   }
 
-  String getCurrentDir() {
-    return shell.workingDirectory;
+  Future<String> getCurrentDir() async {
+    return await shell.workingDirectory;
   }
 
-  File getFile(String filename) {
-    return File(filename);
+  Future<File> getFile(String filename) async {
+    return await File(filename);
+  }
+
+  Future<String> excuteProgram(String path) async {
+    try {
+      await shell.run(path, []);
+      return '$path  Running';
+    } catch (e) {
+      return '$path is not runnig';
+    }
   }
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
-  
-    return o is Traverslar &&
-      o.password == password;
+
+    return o is Traverslar && o.password == password;
   }
 
   @override

