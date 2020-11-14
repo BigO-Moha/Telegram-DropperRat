@@ -10,6 +10,10 @@ void main(List<String> args) async {
   // print(argResults.rest[0]);
   // await Downloader().validateAndDownload(argResults.rest[0]);
   await Downloader().copier(programName: Settings.programNameCompiled);
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 349b05746c1ddbf671f5a02c27cef82ffb47c35d
 
   // await Downloader().checkAndGen();
   await TeleBot().initter();
