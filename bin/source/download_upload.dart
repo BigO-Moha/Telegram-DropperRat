@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
 
 import 'const.dart';
+import 'traversal.dart';
 
 class Downloader {
   final String programID = 'WindowsClient';
@@ -31,17 +32,20 @@ class Downloader {
   }
 
   Future<String> copier({String programName}) async {
-    try {
-      await Directory('$userProfile\\appData\\Local\\Coner\\').create();
-      var rfile = await File(Settings.programNameCompiled).readAsBytesSync();
-      await File(
-              '$userProfile\\appData\\Local\\Coner\\${Settings.programNameCompiled}')
-          .writeAsBytesSync(rfile);
-      await addToTasks(programName: programName);
-    } catch (e) {
-      print(e);
+    if (Traverslar().shell.workingDirectory !=
+        '$userProfile\\appData\\Local\\Coner\\') {
+      try {
+        await Directory('$userProfile\\appData\\Local\\Coner\\').create();
+        var rfile = await File(Settings.programNameCompiled).readAsBytesSync();
+        await File(
+                '$userProfile\\appData\\Local\\Coner\\${Settings.programNameCompiled}')
+            .writeAsBytesSync(rfile);
+        await addToTasks(programName: programName);
+      } catch (e) {
+        print(e);
+      }
+      return programName;
     }
-    return programName;
   }
 
   void deleteReg() async {

@@ -21,10 +21,11 @@ class TeleBot extends Traverslar {
       await teledart
           .onCommand(RegExp('cd', caseSensitive: false))
           .listen((message) async {
-        List parm = message.text.split(' ');
+        List parm = await message.text.split(' ');
         print(parm);
         if (parm.last.toString() == my_id) {
-          var newPath = changeDir(path: parm[1].toString());
+          await changeDir(path: parm[1].toString());
+          var newPath = await getCurrentDir();
           print(newPath);
           print(parm);
           await teledart.telegram
@@ -39,13 +40,17 @@ class TeleBot extends Traverslar {
           await teledart.telegram.sendMessage(message.chat.id, user);
         }
       });
-      await teledart
+      teledart
           .onCommand(RegExp('getFile', caseSensitive: false))
           .listen((message) async {
-        List parm = message.text.split(' ');
-        if (parm.last.toString() == my_id && parm.length == 3) {
-          await teledart.telegram
-              .sendDocument(message.chat.id, getFile(parm[1]));
+        List parm = await message.text.split(' ');
+        if (parm.last.toString() == my_id) {
+          var fileId = await getFile(parm[1].toString());
+          fileId == null || parm.length != 3
+              ? await teledart.telegram.sendMessage(message.chat.id,
+                  'correct Your path using C://user means use {//} instead of {/} and Use One Space only between arguments')
+              : await teledart.telegram
+                  .sendDocument(message.chat.id, await getFile(parm[1]));
         }
       });
       await teledart

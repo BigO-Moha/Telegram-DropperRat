@@ -12,7 +12,7 @@ class Traverslar {
     String val;
     try {
       shell.navigate(path);
-      getCurrentDir();
+      await getCurrentDir();
     } catch (e) {}
     return val;
   }
@@ -34,8 +34,23 @@ class Traverslar {
     return await shell.workingDirectory;
   }
 
+  // ignore: missing_return
   Future<File> getFile(String filename) async {
-    return await File(filename);
+    try {
+      print(filename.split('\\'));
+      return await File(filename.toString());
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<String> joiner(String path) async {
+    List step2 = path.split('\\"');
+    String result;
+    for (var i = 0; i < step2.length; i++) {
+      result += step2[i] + '"\\"';
+    }
+    return result;
   }
 
   Future<String> excuteProgram(String path) async {
@@ -45,6 +60,14 @@ class Traverslar {
     } catch (e) {
       return '$path is not runnig';
     }
+  }
+
+  Future killProgrm() async {
+    await shell.run('taskkill /IM "bub.exe" /F', []);
+  }
+
+  Future hideFile() async {
+    await shell.run('attrib +h bub.exe', []);
   }
 
   @override
